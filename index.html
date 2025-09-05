@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Educando</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+<body class="sidebar-collapsed"> <div id="overlay" class="overlay hidden"></div>
+
+    <div id="login-container" class="container">
+        <div class="login-box">
+            <img src="./assets/img/CEDESP.png" alt="Logotipo da Instituição" class="logo">
+            <h1 id="login-title">Acesso ao Portal</h1>
+            <p id="login-subtitle">Use seu ID e senha (ou código de acesso).</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="student-id">ID do Aluno (Matrícula)</label>
+                    <input type="text" id="student-id" placeholder="Digite seu ID" required>
+                </div>
+                <div class="input-group password-field">
+                    <label for="password">Senha ou Código Temporário</label>
+                    <input type="password" id="password" placeholder="Digite sua senha" required>
+                    <div class="password-toggle-checkbox">
+                        <input type="checkbox" id="toggle-login-password">
+                        <label for="toggle-login-password">Ver caracteres</label>
+                    </div>
+                </div>
+                <button type="submit">Acessar</button>
+                <p id="login-error-message" class="error-feedback"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="password-setup-container" class="container hidden">
+        <div class="login-box">
+            <h1>Crie sua Senha</h1>
+            <p>Este é seu primeiro acesso. Por favor, crie uma senha de 4 números.</p>
+            <form id="password-setup-form">
+                <div class="input-group password-field">
+                    <label for="new-password">Nova Senha (4 números)</label>
+                    <input type="password" id="new-password" inputmode="numeric" pattern="\d{4}" maxlength="4" required>
+                    <div class="password-toggle-checkbox">
+                        <input type="checkbox" id="toggle-new-password">
+                        <label for="toggle-new-password">Ver caracteres</label>
+                    </div>
+                </div>
+                <div class="input-group password-field">
+                    <label for="confirm-password">Confirme a Nova Senha</label>
+                    <input type="password" id="confirm-password" inputmode="numeric" pattern="\d{4}" maxlength="4" required>
+                    <div class="password-toggle-checkbox">
+                        <input type="checkbox" id="toggle-confirm-password">
+                        <label for="toggle-confirm-password">Ver caracteres</label>
+                    </div>
+                </div>
+                <button type="submit">Cadastrar Senha</button>
+                <p id="password-error-message" class="error-feedback"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-layout" class="hidden">
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <img src="./assets/img/CEDESP.png" alt="Logotipo Instituição" class="sidebar-logo logo-expanded">
+                <img src="./assets/img/CORACAO_COMUNITA.png" alt="Logotipo Instituição Reduzido" class="sidebar-logo logo-collapsed">
+                <h3 class="sidebar-title">Portal do Educando</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" id="nav-dashboard" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#" id="nav-grades"><i class="fas fa-chart-bar"></i> <span>Minhas Notas</span></a></li>
+                    <li><a href="#" id="nav-frequency"><i class="fas fa-check-circle"></i> <span>Frequência</span></a></li>
+                    <li><a href="#" id="nav-ranking"><i class="fas fa-trophy"></i> <span>Ranking</span></a></li>
+                    <li><a href="#" id="nav-feedbacks"><i class="fas fa-comment-dots"></i> <span>Feedbacks</span></a></li>
+                    <li><a href="#" id="nav-ticket"><i class="fas fa-ticket-alt"></i> <span>Bilhete Único</span></a></li>
+                    <li><a href="#" id="nav-profile"><i class="fas fa-user-circle"></i> <span>Meu Perfil</span></a></li>
+                    <li><a href="#" id="nav-logout"><i class="fas fa-sign-out-alt"></i> <span>Sair</span></a></li>
+                </ul>
+            </nav>
+
+            <button id="sidebar-toggle" class="sidebar-toggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </aside>
+
+        <main id="content-area">
+            <header class="topbar">
+                <button id="menu-toggle" class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <div class="topbar-profile">
+                    <img id="topbar-student-photo" src="" alt="Foto do Educando" class="topbar-profile-photo">
+                    <div class="student-details">
+                        <span id="topbar-student-name" class="student-name"></span>
+                        <div class="student-subdetails">
+                            <span id="topbar-student-course"></span>
+                            <span class="separator">|</span>
+                            <span id="topbar-student-class-prof"></span>
+                             <span class="separator">|</span>
+                            <span id="topbar-student-class-fh"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="darkmode-toggle">
+                        <input type="checkbox" id="darkmode-toggle" />
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+            </header>
+            
+            <div class="page-content">
+                <section id="dashboard-section" class="main-content-section">
+                    <div class="dashboard-cards">
+                        <div class="info-card">
+                            <i class="fas fa-star icon-card"></i>
+                            <h4>Média Geral</h4>
+                            <p id="general-average" class="card-value">--</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-book icon-card"></i>
+                            <h4>Próximo Módulo</h4>
+                            <p id="next-module" class="card-value">--</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-bullhorn icon-card"></i>
+                            <h4>Avisos</h4>
+                            <p id="notices" class="card-value">Nenhum</p>
+                        </div>
+                    </div>
+
+                    <div class="card-container">
+                        <h3>Desempenho nos Módulos</h3>
+                        <div id="grades-summary-container" class="grades-summary">
+                            </div>
+                        <div class="chart-wrapper">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="grades-section" class="main-content-section hidden"><h2>Minhas Notas</h2><p>Em breve...</p></section>
+                <section id="frequency-section" class="main-content-section hidden"><h2>Frequência</h2><p>Em breve...</p></section>
+                <section id="ranking-section" class="main-content-section hidden"><h2>Ranking</h2><p>Em breve...</p></section>
+                <section id="feedbacks-section" class="main-content-section hidden"><h2>Feedbacks</h2><p>Em breve...</p></section>
+                <section id="ticket-section" class="main-content-section hidden"><h2>Bilhete Único</h2><p>Em breve...</p></section>
+                <section id="profile-section" class="main-content-section hidden"><h2>Meu Perfil</h2><p>Em breve...</p></section>
+            </div>
+        </main>
+    </div>
+
+    <script src="./js/script.js" defer></script>
+</body>
+</html>
