@@ -188,7 +188,11 @@ function populateDashboard(student, course) {
         gradesContainer.appendChild(gradeCard);
     });
 
-    createChart(moduleNames, gradesForChart);
+    createChart('performanceChartProf', moduleNames, gradesForChart, 'Nota Módulo');
+    
+    const fhLabels = ['Comunicação', 'Criatividade', 'Colaboração', 'Proatividade'];
+    const fhGrades = [8.5, 9.0, 7.5, 9.5];
+    createChart('performanceChartFH', fhLabels, fhGrades, 'Nota FH');
 }
 
 function calculateGeneralAverage(student, course) {
@@ -217,27 +221,28 @@ function getNextModule(student, course) {
     return 'Concluído';
 }
 
-let performanceChart = null;
-function createChart(labels, grades) {
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    if (performanceChart) { performanceChart.destroy(); }
+let chartInstances = {};
+function createChart(canvasId, labels, grades, label) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    if (chartInstances[canvasId]) { chartInstances[canvasId].destroy(); }
     
-    performanceChart = new Chart(ctx, {
+    chartInstances[canvasId] = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Nota', data: grades,
+                label: label, data: grades,
                 backgroundColor: 'rgba(188, 104, 161, 0.7)',
                 borderColor: 'rgba(188, 104, 161, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                borderRadius: 5,
             }]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
             scales: {
                 y: { beginAtZero: true, max: 10, grid: { color: 'rgba(0, 0, 0, 0.1)' }, ticks: { color: 'var(--cor-texto-principal)' } },
-                x: { grid: { color: 'rgba(0, 0, 0, 0.1)' }, ticks: { color: 'var(--cor-texto-principal)' } }
+                x: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: 'var(--cor-texto-principal)' } }
             },
             plugins: { legend: { display: false } }
         }
@@ -246,15 +251,17 @@ function createChart(labels, grades) {
 }
 
 function updateChartTheme() {
-    if (performanceChart) {
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)';
-        performanceChart.options.scales.y.grid.color = gridColor;
-        performanceChart.options.scales.x.grid.color = gridColor;
-        performanceChart.options.scales.y.ticks.color = 'var(--cor-texto-principal)';
-        performanceChart.options.scales.x.ticks.color = 'var(--cor-texto-principal)';
-        performanceChart.update();
-    }
+    Object.values(chartInstances).forEach(chart => {
+        if (chart) {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            chart.options.scales.y.grid.color = gridColor;
+            chart.options.scales.x.grid.color = gridColor;
+            chart.options.scales.y.ticks.color = 'var(--cor-texto-principal)';
+            chart.options.scales.x.ticks.color = 'var(--cor-texto-principal)';
+            chart.update();
+        }
+    });
 }
 
 // --- NAVEGAÇÃO ENTRE SEÇÕES ---
@@ -295,6 +302,7 @@ menuToggle.addEventListener('click', () => {
     menuToggle.classList.toggle('active');
     document.body.classList.toggle('dashboard-open');
 });
+
 overlay.addEventListener('click', () => {
     sidebar.classList.remove('active');
     overlay.classList.add('hidden');
