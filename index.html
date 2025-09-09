@@ -9,7 +9,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -19,7 +19,7 @@
 
     <div id="login-container" class="container">
         <div class="login-box">
-            <img src="./assets/img/CEDESP.png" alt="Logotipo da Instituição" class="logo">
+            <img src="./assets/img/logo-completo.png" alt="Logotipo da Instituição" class="logo">
             <h1 id="login-title">Acesso ao Portal</h1>
             <p id="login-subtitle">Use seu ID e senha (ou código de acesso).</p>
             <form id="login-form">
@@ -71,12 +71,12 @@
     <div id="dashboard-layout" class="hidden">
         <aside id="sidebar">
             <div class="sidebar-header">
-                <img src="./assets/img/CEDESP.png" alt="Logotipo Instituição" class="sidebar-logo logo-expanded">
-                <img src="./assets/img/CORACAO_COMUNITA.png" alt="Logotipo Instituição Reduzido" class="sidebar-logo logo-collapsed">
+                <img src="./assets/img/logo-completo.png" alt="Logotipo Instituição" class="sidebar-logo logo-expanded">
+                <img src="./assets/img/logo-reduzido.png" alt="Logotipo Instituição Reduzido" class="sidebar-logo logo-collapsed">
                 <h3 class="sidebar-title">Portal do Educando</h3>
             </div>
             <nav class="sidebar-nav">
-                <ul>
+                <ul class="nav-main-links">
                     <li><a href="#" id="nav-dashboard" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
                     <li><a href="#" id="nav-grades"><i class="fas fa-chart-bar"></i> <span>Minhas Notas</span></a></li>
                     <li><a href="#" id="nav-frequency"><i class="fas fa-check-circle"></i> <span>Frequência</span></a></li>
@@ -84,7 +84,9 @@
                     <li><a href="#" id="nav-feedbacks"><i class="fas fa-comment-dots"></i> <span>Feedbacks</span></a></li>
                     <li><a href="#" id="nav-ticket"><i class="fas fa-ticket-alt"></i> <span>Bilhete Único</span></a></li>
                     <li><a href="#" id="nav-profile"><i class="fas fa-user-circle"></i> <span>Meu Perfil</span></a></li>
-                    <li><a href="#" id="nav-logout"><i class="fas fa-sign-out-alt"></i> <span>Sair</span></a></li>
+                </ul>
+                <ul class="nav-logout-link">
+                     <li><a href="#" id="nav-logout"><i class="fas fa-sign-out-alt"></i> <span>Sair</span></a></li>
                 </ul>
             </nav>
 
@@ -125,30 +127,50 @@
             
             <div class="page-content">
                 <section id="dashboard-section" class="main-content-section">
-                    <div class="dashboard-cards">
-                        <div class="info-card">
-                            <i class="fas fa-star icon-card"></i>
-                            <h4>Média Geral</h4>
-                            <p id="general-average" class="card-value">--</p>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-book icon-card"></i>
-                            <h4>Próximo Módulo</h4>
-                            <p id="next-module" class="card-value">--</p>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-bullhorn icon-card"></i>
-                            <h4>Avisos</h4>
-                            <p id="notices" class="card-value">Nenhum</p>
-                        </div>
-                    </div>
-
-                    <div class="card-container">
-                        <h3>Desempenho nos Módulos</h3>
-                        <div id="grades-summary-container" class="grades-summary">
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-star card-icon"></i>
+                            <div class="stat-info">
+                                <h4>Média Geral</h4>
+                                <p id="general-average">--</p>
                             </div>
-                        <div class="chart-wrapper">
-                            <canvas id="performanceChart"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-trophy card-icon"></i>
+                            <div class="stat-info">
+                                <h4>Ranking</h4>
+                                <p id="ranking-position">--</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-calendar-times card-icon"></i>
+                            <div class="stat-info">
+                                <h4>Faltas / Atrasos</h4>
+                                <p id="absences-delays">--</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-full recados-card">
+                            <h4><i class="fas fa-bullhorn"></i> Avisos e Recados</h4>
+                            <p id="notices">Nenhum recado no momento.</p>
+                        </div>
+
+                        <div class="card-full performance-card">
+                            <h4><i class="fas fa-chart-line"></i> Desempenho</h4>
+                            <div class="performance-charts">
+                                <div class="chart-container">
+                                    <h5>Curso Profissionalizante</h5>
+                                    <div class="chart-wrapper">
+                                        <canvas id="performanceChartProf"></canvas>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <h5>Formação Humana</h5>
+                                     <div class="chart-wrapper">
+                                        <canvas id="performanceChartFH"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
